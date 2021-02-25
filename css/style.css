@@ -1,0 +1,135 @@
+@font-face {
+    font-family: Minecraft;
+    src: url(/fonts/Minecraft.ttf);
+  }
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Minecraft, Arial, sans-serif;
+}
+
+:root {
+    --playButtonWidth: 230px;
+}
+body {
+    height: 100vh;
+}
+
+.landing {
+    /* height: calc(100vh - 3px); */
+    height: 100%;
+    border: 3px;
+   background: url('/img/minecraft_bg.jpg') no-repeat center center/cover; 
+   text-align: center;
+   overflow: hidden;
+   padding: auto 0;
+}
+
+@media only screen and (max-width: 480px) {
+    .landing h1 {
+        font-size: 48px;
+        margin-top: 120px;
+        color: gray;
+        opacity: 0.8;
+        text-shadow: 5px 5px darkgray;
+        text-shadow: -5px -5px black;
+    }
+
+    .playBtn {
+        width: var(--playButtonWidth);
+        height: 70px;
+        opacity: 0.8;
+        /* top: 40%; */
+        margin:  auto;
+        margin-bottom: 10vh;
+        text-align: center;
+        left: calc((50vh - var(--playButtonWidth)) / 2);
+        outline: 0;
+        font-size: 18px;
+        font-family: Minecraft, Arial;
+        background-color: #85CDD4;
+        color: white;
+        padding-top:5px;
+        border: none;
+    
+    }
+  }
+
+.landing h1 {
+    font-size: 92px;
+    margin-top: 120px;
+    color: gray;
+    opacity: 0.8;
+    text-shadow: 5px 5px darkgray;
+    text-shadow: -5px -5px black;
+}
+.playBtn {
+    width: var(--playButtonWidth);
+    height: 70px;
+    opacity: 0.8;
+    /* top: 40%; */
+    margin:  auto;
+    margin-bottom: 10vh;
+    text-align: center;
+    left: calc((50vh - var(--playButtonWidth)) / 2);
+    outline: 0;
+    font-size: 36px;
+    font-family: Minecraft, Arial;
+    background-color: #85CDD4;
+    color: white;
+    padding-top:5px;
+    border: none;
+    transition: all .5s;
+    border-top: 2px solid #85CDD4;
+    border-left: 2px solid #85CDD4;
+    box-shadow: 3px 3px darkgray;
+}
+.playBtn:hover {
+    text-shadow: 2px 2px darkgray;
+    opacity: 1;
+}
+.playBtn:active {
+    border: none;
+    box-shadow: none;
+    border-top: 2px solid #384446;
+    border-left: 2px solid #384446;
+}
+.gameWorld {
+    width: 1000px;
+    background: skyblue;
+    height:fit-content;
+
+                                                                                                                                                                                                                                            
+}
+
+.block {
+    height: 25px;
+    width: 25px;
+    background: skyblue;
+}
+
+.stone {
+    background: gray;
+}
+
+.dirt {
+    background: sienna;
+}
+
+.sky {
+    background: skyblue;
+}
+
+.wood {
+    background: darkgoldenrod;
+}
+
+.leaf {
+    background: forestgreen;
+}
+
