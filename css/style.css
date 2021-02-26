@@ -102,7 +102,7 @@ body {
 .gameWorld {
     width: fit-content;
     height: 100vh;
-    background: skyblue;
+    background: rgb(204, 228, 238);
     height:fit-content;
                                                                                                                                                                                                                                           
 }
@@ -110,8 +110,8 @@ body {
 .block {
     height: 50px;
     width: 50px;
-    background: cyan;
-    border: 1px dashed gray;
+    background: #80EBFF;
+    /* border: 1px dashed gray; */
 }
 
 .block:hover {
@@ -137,7 +137,8 @@ body {
 }
 
 .sky {
-    background: skyblue;
+    /* background: #82D5FD; */
+    background: #80EBFF;
 }
 
 .wood {
@@ -149,12 +150,12 @@ body {
 }
 
 .axe {
-    cursor: url('../img/axe_cursor.png'), auto;
+    cursor: url('../img/diamond_pickaxe1.png'), auto;
     /* cursor: crosshair; */
 }
 .shovel {
-    cursor: url('../img/axe_cursor.png') auto;
+    cursor: url('../img/axe_cursor.png'), auto;
 }
 .pickaxe {
-    cursor: url('../img/axe_cursor.png') auto;
+    cursor: url('../img/axe_cursor.png'), auto;
 }
