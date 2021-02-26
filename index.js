@@ -1,30 +1,58 @@
 "use strict";
 
 let playBtn = document.querySelector(".playBtn");
-console.log(playBtn);
+// console.log(playBtn);
 playBtn.addEventListener("click", startGame);
-
+let gameEngine = null;
 function startGame() {
   let landingPage = document.querySelector(".landing");
   landingPage.style.display = "none";
-  let gameEngine = new GameEngine();
+  gameEngine = new GameEngine();
   gameEngine.startGame();
 }
+
+function blockClickHandler(e) {
+    console.log("div clicked",e.currentTarget) ;
+
+    //TODO: chage from pseudo code to real code
+    // if (player holding tool){
+
+        // if (axe) && (isWood) || 
+        // (shovel) && (isDirt) ||
+        // (PICKAXE) && (isRock)
+        //     removeBlock();
+        // else
+        //     do nothing;
+    // } else if (player holding resource)
+        // addBlock()
+        // gameEngine.addBlock(blockType);//TODO: removeBlock
+        // gameEngine.updateInventory();//TODO: UpdateInventory
+        gameEngine.removeBlock(e.currentTarget);
+
+}
+const BlockTypes = {
+    DIRT: 'dirt',
+    SKY: 'sky',
+    ROCK: 'rock',
+    CLOUD: 'cloud',
+    WOOD: 'wood',
+    }
 /////////////////////////////////////
 class GameEngine {
   constructor() {
-    this.gameWorld = new GameWorld(10, 10, 3, 4); // rows, columns, numTrees, numRocks
+    this.gameWorld = new GameWorld(15, 30, 3, 4); // rows, columns, numTrees, numRocks
   }
   startGame() {
-    console.log(this, "startGame");
+    // console.log(this, "startGame");
     this.gameWorld.generateWorld();
-    this.gameWorld.pickTool(Tool.AXE); // default tool
+    this.gameWorld.pickTool(Tooltype.AXE); // default tool
   }
+  removeBlock(block) {this.gameWorld.removeBlock(block);}
 }
 /////////////////////////////////////////
 class GameWorld {
   constructor(rows, columns, numTrees, numRocks) {
-    this.map = new Map(rows, columns);
+    this.map = new WorldMap(rows, columns);
     this.inventory = new Inventory();
     this.currentTool = null;
   }
@@ -33,33 +61,44 @@ class GameWorld {
     try {
       let worldElement = document.querySelector(".gameWorld");
       if (worldElement === undefined) return false;
-      console.log("calling create map");
+      //   console.log("calling create map");
       this.map.createMap(worldElement);
     } catch (err) {
       console.log(this, err);
     }
   }
   pickTool(type) {
-     let world = document.querySelector('.gameWorld');
-    switch(type) {
-        case Tool.AXE:
-          world.classList.add('axe');
-          world.classList.remove('sovel');
-          world.classList
-
-
-            
-              
+    try {
+      let world = document.querySelector(".gameWorld");
+      world.classList.remove("axe");
+      world.classList.remove("shovel");
+      world.classList.remove("pickaxe");
+      switch (type) {
+        case Tooltype.AXE:
+          world.classList.add("axe");
+          break;
+        case Tooltype.SHOVEL:
+          world.classList.add("shovel");
+          break;
+        case Tooltype.PICKAXE:
+          world.classList.add("pickaxe");
+          break;
+          defualt: throw "invalid tool";
+      }
+      this.currentTool = type;
+    } catch (err) {
+      console.log(err);
     }
   }
+
   generateInventory() {}
-  addResource() {}
-  removeResource() {}
+  addBlock() {}
+  removeBlock(block) { this.map.removeBlock(block);}
 }
 /////////////////////////////////////////
-class Map {
+class WorldMap {
   constructor(_rows = 10, _columns = 10, _nTrees = 2, _nRocks = 2) {
-    console.log("Map()");
+    // console.log("WorldMap()");
     this.rows = _rows;
     this.columns = _columns;
     this.blocks = new Array();
@@ -73,8 +112,7 @@ class Map {
     try {
       this.worldElement = document.querySelector(".gameWorld");
       if (this.worldElement === undefined) throw "world not defined";
-      // this.worldElement = worldElement;
-      // console.log(this.worldElement);
+
       //create general blocks
       let numBlocks = this.rows * this.columns;
       this.worldElement.style.display = "grid";
@@ -83,45 +121,78 @@ class Map {
       for (let i = 0; i < numBlocks; i++) {
         let block = new Block();
         let div = document.createElement("div");
+        div.addEventListener('click',(blockClickHandler));
         div.classList.add("block");
         div.classList.add("sky");
         this.blocks.push(div);
         this.worldElement.appendChild(div);
       }
       this.createDirt();
+      for (let i=0; i < this.nClouds; i++)
+        this.createCloud();
       // createSand() {};
       // createTrees(){};
       // createRocks(){};
-      // createClouds(){};
     } catch (err) {
-      console.log(this, err);
+        console.log(this, err);
     }
-  }
-  createDirt() {
-    // let start = Math.floor(0.6 * this.rows);
-    // let end = Math.floor(1 * this.rows);
-    let start = 0, end = 3;
+}
+addBlock(BlockType) {}
+removeBlock(block) {
+    console.log("remove block");
+    for(const type in BlockTypes) {
+        console.log(1);
+        block.classList.remove(type);
+    }
+    block.classList.add(BlockTypes.SKY);
+
+
+}
+createDirt() {
+    let start = Math.floor(0.7 * this.rows);
+    let end = Math.floor(1 * this.rows);
+    // let start = 0, end = 3;
     // let dirtBlock = document.querySelector('.dirt');
     for (let row = start; row < end; row++)
-      for (let col = 0; col < this.columns; col++) {
-          let i = row * this.columns + col;
-          this.blocks[i].classList.remove("sky");
-          this.blocks[i].classList.add("dirt");
-          console.log(i,this.blocks[i], this.rows, this.columns);
-        }
-        console.log(this.blocks,this.blocks.length, typeof(this.blocks[0]));
-  }
+    for (let col = 0; col < this.columns; col++) {
+        let i = row * this.columns + col;
+        this.blocks[i].classList.remove("sky");
+        this.blocks[i].classList.add("dirt");
+        //   console.log(i,this.blocks[i], this.rows, this.columns);
+    }
+    // console.log(this.blocks,this.blocks.length, typeof(this.blocks[0]));
 }
+createCloud(){
+    //pick a random spot in the sky
+    let start = Math.floor(Math.random() * (0.4 * this.rows));
+    let cloudHeight = Math.floor(Math.random()*3 + 3);
+    console.log("cloud start", start, "Height", cloudHeight);
+    for (let row=start; row < start+cloudHeight; row++){
+        let colStart = Math.floor(Math.random()*this.columns)
+        let colWidth = Math.floor(Math.random() * 5+ 2);
+        for (let col= colStart; col < colStart+colWidth; col++) {
+            let i = row * this.columns + col;
+            console.log(i,": colstart", colStart, "colWidth", colWidth);
+            this.blocks[i].classList.remove("sky");
+            this.blocks[i].classList.add("cloud");    
+        }
+    }
+};
+}
+
 ////////////////////////////////////////////
 //TODO: class tool
-class Tool {
-  constructor() {}
-  const type = {
-	AXE: "axe",
-	PICKAXE: "pickaxe",
-	SHOVEL: "shovel",
-}
-}
+// class Tool {
+//     constructor() {};
+//     }
+//   };
+
+const Tooltype = {
+  AXE: "axe",
+  PICKAXE: "pickaxe",
+  SHOVEL: "shovel",
+};
+
 ///////////////////////////////////////////////
 // TODO: Inventory
 class Inventory {

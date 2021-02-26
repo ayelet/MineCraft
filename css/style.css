@@ -100,17 +100,27 @@ body {
     border-left: 2px solid #384446;
 }
 .gameWorld {
-    width: 1000px;
+    width: fit-content;
+    height: 100vh;
     background: skyblue;
     height:fit-content;
-
-                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                          
 }
 
 .block {
-    height: 25px;
-    width: 25px;
-    background: skyblue;
+    height: 50px;
+    width: 50px;
+    background: cyan;
+    border: 1px dashed gray;
+}
+
+.block:hover {
+    background:rgb(97, 152, 173);
+    border: 1px solid  white;
+}
+
+.cloud {
+    background: white;
 }
 
 .stone {
@@ -119,6 +129,11 @@ body {
 
 .dirt {
     background: sienna;
+    background: url('../img/dirt.png');
+}
+
+.dirt:hover {
+    background: rgb(107, 54, 29);
 }
 
 .sky {
@@ -133,3 +148,13 @@ body {
     background: forestgreen;
 }
 
+.axe {
+    cursor: url('../img/axe_cursor.png'), auto;
+    /* cursor: crosshair; */
+}
+.shovel {
+    cursor: url('../img/axe_cursor.png') auto;
+}
+.pickaxe {
+    cursor: url('../img/axe_cursor.png') auto;
+}
