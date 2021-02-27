@@ -61,12 +61,12 @@ body {
   }
 
 .landing h1 {
-    font-size: 92px;
+    font-size: 128px;
     margin-top: 120px;
-    color: gray;
-    opacity: 0.8;
+    color: white;
+    opacity: 0.9;
     text-shadow: 5px 5px darkgray;
-    text-shadow: -5px -5px black;
+    text-shadow: -5px -5px #85CDD4;
 }
 .playBtn {
     width: var(--playButtonWidth);
@@ -123,8 +123,12 @@ body {
     background: white;
 }
 
-.stone {
-    background: gray;
+.rock {
+    /* background: gray; */
+    background: url(../img/stone.png);
+}
+.rock:hover {
+    background: url(../img/stone_1.png);
 }
 
 .dirt {
@@ -141,12 +145,15 @@ body {
     background: #80EBFF;
 }
 
+.sun {
+    background: yellow;
+}
 .wood {
-    background: darkgoldenrod;
+    background: url('../img/tree.png');
 }
 
 .leaf {
-    background: forestgreen;
+    background: url('../img/tree-leaves.png');
 }
 
 .axe {
