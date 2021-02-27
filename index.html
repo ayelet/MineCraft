@@ -11,9 +11,27 @@
 <body>
     <div class="landing">
         <h1>MineCraft 2D</h1>
-        <input type="button" class="playBtn" value="Play">
+        <input type="button" class="btn playBtn" value="Play">
+        <input type="button" class="btn Help" value="Help">
     </div>
-    <div class="gameWorld">
+    <div class="gameScreen">
+
+        <div class="inventory">
+            <h3>Tools</h3>
+            <div class="radio-btn-row">
+                <div class="radio-btn-wrapper">
+                    <button id="shovel" class="radio-btn btn-shovel" type="button">Shovel</button>
+                </div>
+                <div class="radio-btn-wrapper">
+                    <button id="axe" class="radio-btn btn-axe" type="button">Axe</button>
+                </div>
+                <div class="radio-btn-wrapper">
+                    <button id="pickaxe" class="radio-btn btn-pickaxe" type="button">Pickaxe</button>
+                </div>
+            </div>
+        
+        </div>
+        <div class="gameWorld"></div>
     </div>
 </body>
 </html>

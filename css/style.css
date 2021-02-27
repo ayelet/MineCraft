@@ -68,7 +68,7 @@ body {
     text-shadow: 5px 5px darkgray;
     text-shadow: -5px -5px #85CDD4;
 }
-.playBtn {
+.btn {
     width: var(--playButtonWidth);
     height: 70px;
     opacity: 0.8;
@@ -89,7 +89,7 @@ body {
     border-left: 2px solid #85CDD4;
     box-shadow: 3px 3px darkgray;
 }
-.playBtn:hover {
+.btn:hover {
     text-shadow: 2px 2px darkgray;
     opacity: 1;
 }
@@ -104,20 +104,74 @@ body {
     height: 100vh;
     background: rgb(204, 228, 238);
     height:fit-content;
+    /* position: relative; */
                                                                                                                                                                                                                                           
 }
+.gameScreen {
+    display: grid;
+    grid-template-columns: 150px auto;
+/* =   position: relative; */
+}
 
+.inventory {
+    position: fixed;
+    display: block;
+    /* position: -webkit-sticky; */
+    /* position: absolute; */
+    width: 150px;
+    height: 400px;
+    left: 0;
+    top: 0;
+    right: 150px;
+    background:rgb(48, 49, 49);
+    opacity: 0.8;
+    /* display: flex; */
+    cursor: pointer;
+}
+.inventory * {
+    cursor: pointer;
+}
+.radio-btn-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .radio-btn-wrapper{
+    margin: 0px 4px;
+  }
+  
+  .radio-btn{
+    background-color: #FFFFFF;
+    border: 1px solid #4A4A4A;
+    color: #4A5362;   
+    font-size: 14px;  
+    line-height: 26px;    
+    outline: none;
+    /* cursor: pointer; */
+  }
+  
+  .radio-btn-selected{
+    background-color: #FFFFFF;
+    border: 1px solid #55BC7E;
+    color: #55BC7E;
+    font-size: 14px;  
+    line-height: 26px;    
+    outline: none;
+  }
+
+
+/* /////////////////////////////////// */
 .block {
     height: 50px;
     width: 50px;
     background: #80EBFF;
     /* border: 1px dashed gray; */
+    transition: all 0.3s;
 }
 
-.block:hover {
-    background:rgb(97, 152, 173);
-    border: 1px solid  white;
-}
+
 
 .cloud {
     background: white;
@@ -132,12 +186,13 @@ body {
 }
 
 .dirt {
-    background: sienna;
-    background: url('../img/dirt.png');
+    /* background: sienna; */
+    background: url(../img/dirt.png);
+    
 }
 
-.dirt:hover {
-    background: rgb(107, 54, 29);
+.dirt:hover{
+    background: url(../img/dirt_hover.png);
 }
 
 .sky {
@@ -148,21 +203,28 @@ body {
 .sun {
     background: yellow;
 }
+
 .wood {
-    background: url('../img/tree.png');
+    background: url('../img/tree.png') no-repeat center center/cover;
+}
+.wood:hover {
+    background: url('../img/tree_hover.png') no-repeat center center/cover;
 }
 
 .leaf {
-    background: url('../img/tree-leaves.png');
+    background: url('../img/tree-leaves.png') no-repeat center center/cover;
+}
+.leaf:hover {
+    background: url('../img/tree-leaves_hover.png') no-repeat center center/cover;
 }
 
 .axe {
-    cursor: url('../img/diamond_pickaxe1.png'), auto;
+    cursor: url('../img/diamond_axe1.png'), auto;
     /* cursor: crosshair; */
 }
 .shovel {
-    cursor: url('../img/axe_cursor.png'), auto;
+    cursor: url('../img/diamond_shovel.png'), auto;
 }
 .pickaxe {
-    cursor: url('../img/axe_cursor.png'), auto;
+    cursor: url('../img/diamond_pickaxe1.png'), auto;
 }
