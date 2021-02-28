@@ -77,6 +77,8 @@ body {
   height: 100vh;
   background: rgb(204, 228, 238);
   height: fit-content;
+  position: relative;
+  left: 150px;
 }
 .gameScreen {
   display: grid;
@@ -93,7 +95,7 @@ body {
   align-items: center;
 
   width: 150px;
-  height: 500px;
+  /* height: 500px; */
   left: 0;
   top: 0;
   right: 150px;
@@ -102,6 +104,13 @@ body {
   font-size: 24px;
   cursor: pointer;
   left: -4000px;
+  z-index: 20;
+}
+
+.restart {
+  width: 50px;
+  height: 50px;
+  margin-top: 10px;
 }
 
 .radio-btn-row {
@@ -253,10 +262,10 @@ body {
     flex-wrap: wrap;
     align-items: center;
     width: 100vw;
-    height: 150px;
+    height: 200px;
     left: 0;
     top: 0;
-    bottom: 150px;
+    bottom: 200px;
     background: #aea4a2;
     color: white;
     font-size: 18px;

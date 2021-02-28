@@ -12,12 +12,18 @@ let playBtn = document.querySelector(".playBtn");
 let toolBtns = document.querySelectorAll(".tool");
 let resourceBtns = document.querySelectorAll(".resource");
 playBtn.addEventListener("click", startGame);
+// add event listener for the restart button
+document.querySelector('.restart').addEventListener('click', restartGame);
 let gameEngine = null;
 function startGame() {
   let landingPage = document.querySelector(".landing");
   landingPage.style.display = "none";
   gameEngine = new GameEngine();
   gameEngine.startGame();
+}
+
+function restartGame() {
+  // gameEngine.restartGame();
 }
 // create radio buttons for tools
 toolBtns.forEach((btn) => {
@@ -67,19 +73,6 @@ function blockClickHandler(e) {
   }
 }
 
-// $.each($('.radio-btn'), function (key, value) {
-//     $(this).click(function (e) {
-//         $('.radio-btn-selected')
-//             .removeClass('radio-btn-selected')
-//             .addClass('radio-btn');
-
-//         $(this)
-//             .removeClass('radio-btn')
-//             .addClass('radio-btn-selected');
-
-//         //do whatever you want on click
-//     });
-// });
 
 const BlockTypes = {
   DIRT: "dirt",
@@ -102,7 +95,7 @@ class GameEngine {
     // console.log(this, "startGame");
     this.gameWorld.generateWorld();
     this.gameWorld.pickTool(Tooltype.SHOVEL); // default tool
-    this.gameWorld.player = Player.building; // default starting state
+    // this.gameWorld.player = Player.building; // default starting state
     console.log(this.gameWorld);
     // add event listener for tool pickup
     toolBtns.forEach((btn) => {
@@ -125,8 +118,17 @@ class GameEngine {
         this.changePlayerState(playerState.building)
       );
     });
+    
+    // show the window
     let inventory = document.querySelector(".inventory");
     inventory.style.left = 0;
+  }
+
+  // restartGame
+  restartGame() {
+    this.gameWorld.map.clearMap();
+    // this.gameWorld.map.createMap();
+    this.gameWorld.generateWorld();
   }
   // change player state to mining or building
   changePlayerState(state) {
@@ -180,7 +182,7 @@ class GameWorld {
     this.inventory = new Inventory();
     this.currentTool = null;
     this.currentResource = null;
-    this.player = "";
+    // this.player = "";
   }
   currentTool;
   generateWorld() {
@@ -315,6 +317,17 @@ class WorldMap {
       console.log(this, err);
     }
   }
+  clearMap() {
+    let worldElement = document.querySelector(".gameWorld");
+    worldElement.style.display = "block";
+    let divs = worldElement.querySelectorAll('.block');
+    console.log("clearing map", divs.length);
+    for (let i = 0; i < divs.length; i++) {
+      worldElement.removeChild(divs[i]);
+      // console.log();("removed child", divs[i]);
+    }
+  }
+
   addBlock(block, type) {
     this.removeBlock(block);
     block.classList.add(type);
