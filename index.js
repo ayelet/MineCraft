@@ -1,3 +1,4 @@
+// Minecraft game - Ayelet Danieli
 "use strict";
 
 //utility functions
@@ -56,7 +57,7 @@ resourceBtns.forEach((btn) => {
 });
 
 function blockClickHandler(e) {
-  // gameEngine.updateInventory();//TODO: UpdateInventory
+
   console.log(gameEngine.playerState);
   if (gameEngine.playerState === playerState.mining) {
     gameEngine.removeBlock(e.currentTarget);
@@ -160,7 +161,7 @@ class GameEngine {
 
   updateInventory(action, blockType) {
     if (action === Action.Consume) {
-      this.inventory.resources[blockType]--; //TODO: check when zero
+      this.inventory.resources[blockType]--; 
     } else {
       this.inventory.resources[blockType]++;
     }
@@ -197,6 +198,7 @@ class GameWorld {
     //   console.log("###pick tool ", type);
     try {
       let world = document.querySelector(".gameWorld");
+      world.classList.remove('building');
       world.classList.remove("axe");
       world.classList.remove("shovel");
       world.classList.remove("pickaxe");
@@ -221,6 +223,17 @@ class GameWorld {
 
   pickResource(type) {
       console.log("pick resource", type);
+      try {
+        let world = document.querySelector(".gameWorld");
+        world.classList.remove("axe");
+        world.classList.remove("shovel");
+        world.classList.remove("pickaxe");
+        
+        world.classList.add('building');
+        //   console.log("picked tool", this.inventory.currentTool);
+      } catch (err) {
+        console.log(err);
+      }
     this.currentResource = type;
   }
 
@@ -284,7 +297,7 @@ class WorldMap {
       this.worldElement.style.gridTemplateRows = `repeat(${this.rows}, "1fr")`;
       this.worldElement.style.gridTemplateColumns = `repeat(${this.columns}, 1fr)`;
       for (let i = 0; i < numBlocks; i++) {
-        let block = new Block();
+        // let block = new Block();
         let div = document.createElement("div");
         div.addEventListener("click", blockClickHandler);
         div.classList.add("block");
@@ -351,8 +364,7 @@ class WorldMap {
     for (let i = 0; i < cloud.formations[cloudType].length; i++) {
       let seed = seedX * this.columns + seedY;
       let curr = seed + cloud.formations[cloudType][i];
-      //   if (curr < 0 || curr > this.blocks.length) { //TODO: handle out of range indices
-      // throw "error in cloud formation";
+      
       this.addBlock(this.blocks[curr], BlockTypes.CLOUD);
     }
   }
@@ -375,8 +387,7 @@ class WorldMap {
       for (let i = 0; i < rock.forms[rockType].length; i++) {
         let seed = seedX * this.columns + seedY;
         let curr = seed + rock.forms[rockType][i];
-        //   if (curr < 0 || curr > this.blocks.length) { //TODO: handle out of range indices
-        // throw "error in cloud formation";
+      
         this.addBlock(this.blocks[curr], BlockTypes.ROCK);
       }
     }
@@ -466,11 +477,7 @@ class Inventory {
       this.resources.type--;
   }
 }
-///////////////////////////////////////////////////
-//TODO: block class
-class Block {
-  constructor() {}
-}
+
 ///////////////////////////////////////////////////////
 
 class Player {}
