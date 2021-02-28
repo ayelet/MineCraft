@@ -18,6 +18,11 @@ html {
 }
 body {
   height: 100vh;
+  
+}
+
+.building {
+    cursor: crosshair;
 }
 
 .landing {
@@ -229,7 +234,6 @@ body {
 
 .axe {
   cursor: url("../img/diamond_axe1.png"), auto;
-  /* cursor: crosshair; */
 }
 .shovel {
   cursor: url("../img/diamond_shovel.png"), auto;

@@ -131,8 +131,10 @@ class GameEngine {
   changePlayerState(state) {
       console.log("changing player state ", state);
     this.playerState = state;
-    if (state === playerState.building)
-        this.gameWorld.worldElement.style.cursor = 'crosshair';
+    // if (state === playerState.building)
+    //     document.body.classList.add('building');
+    // else
+    //     document.body.classList.remove('building');
   }
   removeBlock(block) {
     let blockType = this.gameWorld.getBlockType(block);
@@ -151,13 +153,13 @@ class GameEngine {
           block,
           this.gameWorld.currentResource
         );
-        this.UpdateInventory(Action.Consume, blockType);
+        this.updateInventory(Action.Consume, this.gameWorld.currentResource);
       }
     }
   }
 
   updateInventory(action, blockType) {
-    if (action === Inventory.Consume) {
+    if (action === Action.Consume) {
       this.inventory.resources[blockType]--; //TODO: check when zero
     } else {
       this.inventory.resources[blockType]++;
