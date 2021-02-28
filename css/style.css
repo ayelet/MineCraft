@@ -1,230 +1,239 @@
 @font-face {
-    font-family: Minecraft;
-    src: url(/fonts/Minecraft.ttf);
-  }
+  font-family: Minecraft;
+  src: url(/fonts/MinecraftRegular-Bmg3.otf);
+}
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 html {
-    font-family: Minecraft, Arial, sans-serif;
+  font-family: Minecraft, Arial, sans-serif;
 }
 
 :root {
-    --playButtonWidth: 230px;
+  --playButtonWidth: 230px;
 }
 body {
-    height: 100vh;
+  height: 100vh;
 }
 
 .landing {
-    /* height: calc(100vh - 3px); */
-    height: 100%;
-    border: 3px;
-   background: url('/img/minecraft_bg.jpg') no-repeat center center/cover; 
-   text-align: center;
-   overflow: hidden;
-   padding: auto 0;
+  /* height: calc(100vh - 3px); */
+  height: 100%;
+  border: 3px;
+  background: url("/img/minecraft_bg.jpg") no-repeat center center/cover;
+  text-align: center;
+  overflow: hidden;
+  padding: auto 0;
 }
 
 @media only screen and (max-width: 480px) {
-    .landing h1 {
-        font-size: 48px;
-        margin-top: 120px;
-        color: gray;
-        opacity: 0.8;
-        text-shadow: 5px 5px darkgray;
-        text-shadow: -5px -5px black;
-    }
-
-    .playBtn {
-        width: var(--playButtonWidth);
-        height: 70px;
-        opacity: 0.8;
-        /* top: 40%; */
-        margin:  auto;
-        margin-bottom: 10vh;
-        text-align: center;
-        left: calc((50vh - var(--playButtonWidth)) / 2);
-        outline: 0;
-        font-size: 18px;
-        font-family: Minecraft, Arial;
-        background-color: #85CDD4;
-        color: white;
-        padding-top:5px;
-        border: none;
-    
-    }
+  .landing h1 {
+    font-size: 48px;
+    margin-top: 120px;
+    color: gray;
+    opacity: 0.8;
+    text-shadow: 5px 5px darkgray;
+    text-shadow: -5px -5px black;
   }
 
-.landing h1 {
-    font-size: 128px;
-    margin-top: 120px;
-    color: white;
-    opacity: 0.9;
-    text-shadow: 5px 5px darkgray;
-    text-shadow: -5px -5px #85CDD4;
-}
-.btn {
+  .playBtn {
     width: var(--playButtonWidth);
     height: 70px;
     opacity: 0.8;
     /* top: 40%; */
-    margin:  auto;
+    margin: auto;
     margin-bottom: 10vh;
     text-align: center;
     left: calc((50vh - var(--playButtonWidth)) / 2);
     outline: 0;
-    font-size: 36px;
+    font-size: 18px;
     font-family: Minecraft, Arial;
-    background-color: #85CDD4;
+    background-color: #85cdd4;
     color: white;
-    padding-top:5px;
+    padding-top: 5px;
     border: none;
-    transition: all .5s;
-    border-top: 2px solid #85CDD4;
-    border-left: 2px solid #85CDD4;
-    box-shadow: 3px 3px darkgray;
+  }
+}
+
+.landing h1 {
+  font-size: 128px;
+  margin-top: 120px;
+  color: white;
+  opacity: 0.9;
+  text-shadow: 5px 5px darkgray;
+  text-shadow: -5px -5px #85cdd4;
+}
+.btn {
+  width: var(--playButtonWidth);
+  height: 70px;
+  opacity: 0.8;
+  /* top: 40%; */
+  margin: auto;
+  margin-bottom: 10vh;
+  text-align: center;
+  left: calc((50vh - var(--playButtonWidth)) / 2);
+  outline: 0;
+  font-size: 36px;
+  font-family: Minecraft, Arial;
+  background-color: #85cdd4;
+  color: white;
+  padding-top: 5px;
+  border: none;
+  transition: all 0.5s;
+  border-top: 2px solid #85cdd4;
+  border-left: 2px solid #85cdd4;
+  box-shadow: 3px 3px darkgray;
 }
 .btn:hover {
-    text-shadow: 2px 2px darkgray;
-    opacity: 1;
+  text-shadow: 2px 2px darkgray;
+  opacity: 1;
 }
 .playBtn:active {
-    border: none;
-    box-shadow: none;
-    border-top: 2px solid #384446;
-    border-left: 2px solid #384446;
+  border: none;
+  box-shadow: none;
+  border-top: 2px solid #384446;
+  border-left: 2px solid #384446;
 }
 .gameWorld {
-    width: fit-content;
-    height: 100vh;
-    background: rgb(204, 228, 238);
-    height:fit-content;
-    /* position: relative; */
-                                                                                                                                                                                                                                          
+  width: fit-content;
+  height: 100vh;
+  background: rgb(204, 228, 238);
+  height: fit-content;
+  /* position: relative; */
 }
 .gameScreen {
-    display: grid;
-    grid-template-columns: 150px auto;
-/* =   position: relative; */
+  display: grid;
+  grid-template-columns: 150px auto;
+  /* =   position: relative; */
 }
 
 .inventory {
-    position: fixed;
-    display: block;
-    /* position: -webkit-sticky; */
-    /* position: absolute; */
-    width: 150px;
-    height: 400px;
-    left: 0;
-    top: 0;
-    right: 150px;
-    background:rgb(48, 49, 49);
-    opacity: 0.8;
-    /* display: flex; */
-    cursor: pointer;
+  position: fixed;
+  display: block;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  /* position: absolute; */
+  width: 150px;
+  height: 500px;
+  left: 0;
+  top: 0;
+  right: 150px;
+  background: #aea4a2;
+  color: white;
+  font-size: 24px;
+  /* opacity: 0.8; */
+  cursor: pointer;
+  left: -4000px;
 }
-.inventory * {
-    cursor: pointer;
+
+.radio-btn-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 20px;
 }
-.radio-btn-row{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .radio-btn-wrapper{
-    margin: 0px 4px;
-  }
-  
-  .radio-btn{
-    background-color: #FFFFFF;
-    border: 1px solid #4A4A4A;
-    color: #4A5362;   
-    font-size: 14px;  
-    line-height: 26px;    
-    outline: none;
-    /* cursor: pointer; */
-  }
-  
-  .radio-btn-selected{
-    background-color: #FFFFFF;
-    border: 1px solid #55BC7E;
-    color: #55BC7E;
-    font-size: 14px;  
-    line-height: 26px;    
-    outline: none;
+
+.radio-btn-wrapper {
+  margin: 0px 4px;
+}
+
+.radio-btn {
+  background-color: #fff;
+  border: 1px solid #4a4a4a;
+  color: white;
+  font-family: minecraft, arial;
+  font-size: 32px;
+  line-height: 34px;
+  outline: none;
+  width: 50px;
+  height: 50px;
   }
 
+.btn-shovel {
+    background: url('../img/shovel.png') no-repeat center center/cover;
+}
+.btn-axe {
+    background: url('../img/axe.png') no-repeat center center/cover;
+}
+.btn-pickaxe {
+    background: url('../img/pickaxe.png') no-repeat center center/cover;
+}
+
+.radio-btn-selected {
+  background-color: #80ebff;
+  border: 4px solid #fff;
+  /* color: #fff; */
+  font-size: 32px;
+  line-height: 34px;
+  outline: none;
+}
 
 /* /////////////////////////////////// */
 .block {
-    height: 50px;
-    width: 50px;
-    background: #80EBFF;
-    /* border: 1px dashed gray; */
-    transition: all 0.3s;
+  height: 50px;
+  width: 50px;
+  background: #80ebff;
+  /* border: 1px dashed gray; */
+  transition: all 0.3s;
 }
 
-
-
 .cloud {
-    background: white;
+  background: white;
 }
 
 .rock {
-    /* background: gray; */
-    background: url(../img/stone.png);
+  /* background: gray; */
+  background: url(../img/stone.png);
 }
 .rock:hover {
-    background: url(../img/stone_1.png);
+  background: url(../img/stone_1.png);
 }
 
 .dirt {
-    /* background: sienna; */
-    background: url(../img/dirt.png);
-    
+  /* background: sienna; */
+  background: url(../img/dirt.png);
 }
 
-.dirt:hover{
-    background: url(../img/dirt_hover.png);
+.dirt:hover {
+  background: url(../img/dirt_hover.png);
 }
 
 .sky {
-    /* background: #82D5FD; */
-    background: #80EBFF;
+  /* background: #82D5FD; */
+  background: #80ebff;
 }
 
 .sun {
-    background: yellow;
+  background: yellow;
 }
 
 .wood {
-    background: url('../img/tree.png') no-repeat center center/cover;
+  background: url("../img/tree.png") no-repeat center center/cover;
 }
 .wood:hover {
-    background: url('../img/tree_hover.png') no-repeat center center/cover;
+  background: url("../img/tree_hover.png") no-repeat center center/cover;
 }
 
 .leaf {
-    background: url('../img/tree-leaves.png') no-repeat center center/cover;
+  background: url("../img/tree-leaves.png") no-repeat center center/cover;
 }
 .leaf:hover {
-    background: url('../img/tree-leaves_hover.png') no-repeat center center/cover;
+  background: url("../img/tree-leaves_hover.png") no-repeat center center/cover;
 }
 
 .axe {
-    cursor: url('../img/diamond_axe1.png'), auto;
-    /* cursor: crosshair; */
+  cursor: url("../img/diamond_axe1.png"), auto;
+  /* cursor: crosshair; */
 }
 .shovel {
-    cursor: url('../img/diamond_shovel.png'), auto;
+  cursor: url("../img/diamond_shovel.png"), auto;
 }
 .pickaxe {
-    cursor: url('../img/diamond_pickaxe1.png'), auto;
+  cursor: url("../img/diamond_pickaxe1.png"), auto;
 }

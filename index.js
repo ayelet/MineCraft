@@ -8,8 +8,8 @@ const randomInt = (number, offset = 0) => {
 };
 
 let playBtn = document.querySelector(".playBtn");
-let toolBtns = document.querySelectorAll(".radio-btn");
-// console.log(playBtn);
+let toolBtns = document.querySelectorAll(".tool");
+let resourceBtns = document.querySelectorAll(".resource");
 playBtn.addEventListener("click", startGame);
 let gameEngine = null;
 function startGame() {
@@ -20,31 +20,50 @@ function startGame() {
 }
 // create radio buttons for tools
 toolBtns.forEach((btn) => {
-    btn.addEventListener('click', function() {
-        toolBtns.forEach(btn => {
-            // console.log(btn);
-            
-            btn.classList.remove('radio-btn-selected');
-            btn.classList.add('radio-btn');
-        });
-        btn.classList.add('radio-btn-selected');
-    })
+  btn.addEventListener("click", function () {
+    toolBtns.forEach((btn) => {
+      // console.log(btn);
+
+      btn.classList.remove("radio-btn-selected");
+      btn.classList.add("radio-btn");
+    });
+    resourceBtns.forEach((btn) => {
+        // console.log(btn);
+  
+        btn.classList.remove("radio-btn-selected");
+        btn.classList.add("radio-btn");
+      });
+    btn.classList.add("radio-btn-selected");
+  });
 });
-// change player state to mining or building
-function changePlayerState(state) {
-  gameEngine.playerState = state;
-}
+// create radio buttons for resource
+resourceBtns.forEach((btn) => {
+  btn.addEventListener("click", function () {
+    resourceBtns.forEach((btn) => {
+      // console.log(btn);
+
+      btn.classList.remove("radio-btn-selected");
+      btn.classList.add("radio-btn");
+    });
+    toolBtns.forEach((btn) => {
+      // console.log(btn);
+
+      btn.classList.remove("radio-btn-selected");
+      btn.classList.add("radio-btn");
+    });
+    btn.classList.add("radio-btn-selected");
+  });
+});
 
 function blockClickHandler(e) {
-
-
   // gameEngine.updateInventory();//TODO: UpdateInventory
   console.log(gameEngine.playerState);
-  if (gameEngine.playerState === playerState.mining){
-      gameEngine.removeBlock(e.currentTarget);
-  }
-  else if (gameEngine.playerState === playerState.building)
+  if (gameEngine.playerState === playerState.mining) {
+    gameEngine.removeBlock(e.currentTarget);
+  } else if (gameEngine.playerState === playerState.building) {
+    console.log("current resource is ", gameEngine.gameWorld.currentResource);
     gameEngine.addBlock(e.currentTarget);
+  }
 }
 
 // $.each($('.radio-btn'), function (key, value) {
@@ -86,22 +105,70 @@ class GameEngine {
     console.log(this.gameWorld);
     // add event listener for tool pickup
     toolBtns.forEach((btn) => {
-        console.log(btn.getAttribute('id'));
-        btn.addEventListener('click', () => this.gameWorld.pickTool(btn.getAttribute('id')));
+      console.log(btn.getAttribute("id"));
+      btn.addEventListener("click", () => {
+        this.changePlayerState(playerState.mining);
+          this.gameWorld.pickTool(btn.getAttribute("id"))
+      }
+      );
+      btn.addEventListener("click", () => 
+        this.changePlayerState(playerState.mining)
+      );
     });
+    // add event listener for resource pickup
+    resourceBtns.forEach((btn) => {
+      btn.addEventListener("click", () =>
+        this.gameWorld.pickResource(btn.getAttribute("id"))
+      );
+      btn.addEventListener("click", () =>
+        this.changePlayerState(playerState.building)
+      );
+    });
+    let inventory = document.querySelector(".inventory");
+    inventory.style.left = 0;
+  }
+  // change player state to mining or building
+  changePlayerState(state) {
+      console.log("changing player state ", state);
+    this.playerState = state;
+    if (state === playerState.building)
+        this.gameWorld.worldElement.style.cursor = 'crosshair';
   }
   removeBlock(block) {
     let blockType = this.gameWorld.getBlockType(block);
     if (this.gameWorld.removeBlock(block))
-      this.updateInventory(Inventory.Produce, blockType);
+      this.updateInventory(Action.Produce, blockType);
   }
 
   addBlock(block) {
-    this.gameWorld.addBlock(block);
-    this.UpdateInventory(Inventory.Consume, blockType);
+    console.log("gameEngine.addBlock ", this.playerState, block);
+    if (this.playerState === playerState.mining) this.gameWorld.addBlock(block);
+    else if (this.playerState === playerState.building) {
+      if (
+        this.inventory.hasResource(this.gameWorld.currentResource)
+      ) {
+        this.gameWorld.addBlockFromResources(
+          block,
+          this.gameWorld.currentResource
+        );
+        this.UpdateInventory(Action.Consume, blockType);
+      }
+    }
   }
 
-  updateInventory(action, blockType) {}
+  updateInventory(action, blockType) {
+    if (action === Inventory.Consume) {
+      this.inventory.resources[blockType]--; //TODO: check when zero
+    } else {
+      this.inventory.resources[blockType]++;
+    }
+    document.querySelector(
+      `#${blockType}`
+    ).innerHTML = this.inventory.resources[blockType];
+
+    // console.log(blockType, action);
+    // console.log(this.inventory);
+  }
 }
 /////////////////////////////////////////
 class GameWorld {
@@ -109,6 +176,7 @@ class GameWorld {
     this.map = new WorldMap(rows, columns);
     this.inventory = new Inventory();
     this.currentTool = null;
+    this.currentResource = null;
     this.player = "";
   }
   currentTool;
@@ -118,7 +186,7 @@ class GameWorld {
       if (this.worldElement === undefined) return false;
       //   console.log("calling create map");
       this.map.createMap(this.worldElement);
-      this.inventory.createInventory(this.worldElement);
+      //   this.inventory.createInventory(this.worldElement);
     } catch (err) {
       console.log(this, err);
     }
@@ -143,35 +211,48 @@ class GameWorld {
           defualt: throw "invalid tool";
       }
       this.inventory.currentTool = type;
-      console.log("picked tool", this.inventory.currentTool);
+      //   console.log("picked tool", this.inventory.currentTool);
     } catch (err) {
       console.log(err);
     }
   }
 
-//   generateInventory() {}
+  pickResource(type) {
+      console.log("pick resource", type);
+    this.currentResource = type;
+  }
+
+  //   generateInventory() {}
   getBlockType(block) {
     let type = block.classList[1];
     console.log("get block type: ", type);
     return type;
   }
   addBlock(block) {
+    console.log("adding block", block);
     this.getBlockType(block);
     this.map.addBlock(block, BlockTypes.DIRT);
+  }
+  addBlockFromResources(block, type) {
+    console.log("add block from resource", type);
+    this.map.addBlock(block, type);
   }
   removeBlock(block) {
     let blockType = this.getBlockType(block);
     let curTool = this.inventory.currentTool;
     console.log("block type ", blockType, "current tool", curTool);
     if (Resources.isResource(blockType)) {
-        if (((curTool === Tooltype.AXE) && ((blockType === BlockTypes.WOOD) || (blockType ===(BlockTypes.LEAF)))) ||
-        ((curTool === Tooltype.PICKAXE) && (blockType === BlockTypes.ROCK)) ||
-        ((curTool === Tooltype.SHOVEL) && (blockType === BlockTypes.DIRT))){
-            console.log(blockType, " is resource, tool is ", curTool );
-            this.map.removeBlock(block);
-            this.map.addBlock(block, BlockTypes.SKY);
-        }
-      return true;
+      if (
+        (curTool === Tooltype.AXE &&
+          (blockType === BlockTypes.WOOD || blockType === BlockTypes.LEAF)) ||
+        (curTool === Tooltype.PICKAXE && blockType === BlockTypes.ROCK) ||
+        (curTool === Tooltype.SHOVEL && blockType === BlockTypes.DIRT)
+      ) {
+        console.log(blockType, " is resource, tool is ", curTool);
+        this.map.removeBlock(block);
+        this.map.addBlock(block, BlockTypes.SKY);
+        return true;
+      }
     }
     console.log(blockType, " is not a resource");
     return false;
@@ -213,7 +294,7 @@ class WorldMap {
       this.createDirt();
       for (let i = 0; i < this.nClouds; i++) this.createCloud();
       // createSand() {};
-      for (let i=0; i < this.nTrees; i++ ) this.createTree();
+      for (let i = 0; i < this.nTrees; i++) this.createTree();
       this.createRock();
     } catch (err) {
       console.log(this, err);
@@ -224,6 +305,7 @@ class WorldMap {
     block.classList.add(type);
     // console.log("Adding block", block, type);
   }
+
   removeBlock(block) {
     // console.log("remove block");
     // console.log(block.classList);
@@ -307,7 +389,7 @@ class WorldMap {
     let topOfStump;
     let treeStump = randomInt(tree.stumps.length);
     let leafForm = randomInt(tree.leaves.length);
-    console.log("### tree form: ", treeStump, leafForm);
+    // console.log("### tree form: ", treeStump, leafForm);
     for (let i = 0; i < tree.stumps[treeStump].length; i++) {
       let seed = seedX * this.columns + seedY;
       let curr = seed + tree.stumps[treeStump][i];
@@ -316,7 +398,7 @@ class WorldMap {
     }
     // now let's creat some leaves
     for (let i = 0; i < tree.leaves[leafForm].length; i++) {
-        let seed = topOfStump - 2;
+      let seed = topOfStump - 2;
       let curr = seed + tree.leaves[0][i];
 
       this.addBlock(this.blocks[curr], BlockTypes.LEAF);
@@ -330,6 +412,8 @@ const Tooltype = {
   PICKAXE: "pickaxe",
   SHOVEL: "shovel",
 };
+
+const Action = { Produce: "produce", Consume: "consume" };
 //////////////////////////////////////////////
 class Resources {
   constructor() {}
@@ -351,27 +435,26 @@ class Resources {
 ///////////////////////////////////////////////
 class Inventory {
   constructor() {
-    //   this.window = document.createElement('div');
-    //   this.window.classL ist.add('inventory');
-    // let inventoryWin = window.querySelector('.inventory');
-    // inventoryWin.style.display = "block";
-     
     this.tools = {
       axe: Tooltype.AXE,
       pickaxe: Tooltype.PICKAXE,
       shovel: Tooltype.SHOVEL,
-      
     }; // tool list
     this.currentTool = this.tools.shovel; //current tool that player picked
     this.size = 0; // size of inventory
-    this.resources = { dirt: 0, rock: 0, wood: 0, leaves: 0 }; // list of materials
+    this.resources = { dirt: 0, rock: 0, wood: 0, leaf: 0 }; // list of materials
   }
-//   createInventory(worldElement) {
-    //   let container = window.querySelector('.gameScreen');
-    // worldElement.insertAdjacentElement('beforebegin', this.window);
-     
-    // container.appendChild(this.window);
-//   }
+  //   createInventory(worldElement) {
+  //   let container = window.querySelector('.gameScreen');
+  // worldElement.insertAdjacentElement('beforebegin', this.window);
+
+  // container.appendChild(this.window);
+  //   }
+  hasResource(type) {
+    let has = this.resources[type] > 0;
+    console.log();("hasReource", type, has);
+    return this.resources[type] > 0;
+  }
   addResource(type) {
     if (type in this.resources) this.resources.type++;
     this.size++;
@@ -504,18 +587,19 @@ class Tree {
     this.leaves = [];
     this.stump1 = [0, -col, -col * 2, -col * 3];
     this.stump2 = [
-        -col*0+1, 
-         -col*1+1,
-        -col*2, -col*2+1,
-        -col*3, 
-        -col*4,
-    
+      -col * 0 + 1,
+      -col * 1 + 1,
+      -col * 2,
+      -col * 2 + 1,
+      -col * 3,
+      -col * 4,
     ];
     this.stump3 = [
       0,
       -col,
       -col * 2,
-      -col * 3, -col*3+1,
+      -col * 3,
+      -col * 3 + 1,
       -col * 4,
       -col * 5,
     ];
@@ -539,18 +623,36 @@ class Tree {
       -col * 2 + 2,
       -col * 2 + 3,
       -col * 2 + 4,
-    //   -col * 3,
       -col * 3 + 1,
       -col * 3 + 2,
       -col * 3 + 3,
-    //   -col * 3 + 4,
-    //   -col * 4,
       -col * 4 + 1,
       -col * 4 + 2,
       -col * 4 + 3,
-    //   -col * 4 + 4,
     ];
+    this.leaves2 = [ 
+    1,
+    2,
+    3, 
+    // -col * 1,
+    -col * 1 + 1,
+    -col * 1 + 2,
+    -col * 1 + 3,
+    // -col * 1 + 4,
+    // -col * 2,
+    -col * 2 + 1,
+    -col * 2 + 2,
+    -col * 2 + 3,
+    // -col * 2 + 4,
+    -col * 3 + 1,
+    -col * 3 + 2,
+    -col * 3 + 3,
+    -col * 4 + 1,
+    -col * 4 + 2,
+    -col * 4 + 3,
+];
     this.leaves.push(this.leaves1);
+    this.leaves.push(this.leaves2);
     console.log("created trees", this.stumps, this.leaves1);
     this.numStumps = this.stumps.length;
   }
