@@ -33,36 +33,7 @@ body {
   overflow: hidden;
   padding: auto 0;
 }
-/* /////////////////////////////////////////////////// */
-@media only screen and (max-width: 480px) {
-  .landing h1 {
-    font-size: 48px;
-    margin-top: 120px;
-    color: gray;
-    opacity: 0.8;
-    text-shadow: 5px 5px darkgray;
-    text-shadow: -5px -5px black;
-  }
 
-  .playBtn {
-    width: var(--playButtonWidth);
-    height: 70px;
-    opacity: 0.8;
-
-    margin: auto;
-    margin-bottom: 10vh;
-    text-align: center;
-    left: calc((50vh - var(--playButtonWidth)) / 2);
-    outline: 0;
-    font-size: 18px;
-    font-family: Minecraft, Arial;
-    background-color: #85cdd4;
-    color: white;
-    padding-top: 5px;
-    border: none;
-  }
-}
-/* ////////////////////////////////////////////// */
 .landing h1 {
   font-size: 128px;
   margin-top: 120px;
@@ -237,3 +208,66 @@ body {
 .building {
   cursor: crosshair;
 }
+
+/* /////////////////////////////////////////////////// */
+@media only screen and (max-width: 480px) {
+  .landing h1 {
+    font-size: 48px;
+    margin-top: 120px;
+    color: gray;
+    opacity: 0.8;
+    text-shadow: 5px 5px darkgray;
+    text-shadow: -5px -5px black;
+  }
+
+  .playBtn {
+    width: var(--playButtonWidth);
+    height: 70px;
+    opacity: 0.8;
+
+    margin: auto;
+    margin-bottom: 10vh;
+    text-align: center;
+    left: calc((50vh - var(--playButtonWidth)) / 2);
+    outline: 0;
+    font-size: 18px;
+    font-family: Minecraft, Arial;
+    background-color: #85cdd4;
+    color: white;
+    padding-top: 5px;
+    border: none;
+  }
+
+  .gameScreen {
+    display: grid;
+    grid-template-rows: 150px auto;
+    grid-template-columns: auto;
+    position: relative;
+  }
+
+  .inventory {
+    position: fixed;
+    /* display: block; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100vw;
+    height: 150px;
+    left: 0;
+    top: 0;
+    bottom: 150px;
+    background: #aea4a2;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    left: -4000px;
+  }
+  .radio-btn-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
+/* ////////////////////////////////////////////// */
