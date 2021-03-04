@@ -309,9 +309,16 @@ class WorldMap {
       }
       this.createSun();
       this.createDirt();
-      for (let i = 0; i < this.nClouds; i++) this.createCloud();
-      // createSand() {};
-      for (let i = 0; i < this.nTrees; i++) this.createTree();
+      let offsetY = 0;
+      for (let i = 0; i < this.nClouds; i++) {
+        this.createCloud(offsetY);
+        offsetY += Math.floor(this.columns/this.nClouds); // this variable disperses the clouds evenly
+      }
+      let offsetTree = 0;
+      for (let i = 0; i < this.nTrees; i++) {
+        this.createTree(offsetTree);
+        offsetTree += Math.floor(this.columns/this.nTrees);
+      }
       this.createRock();
     } catch (err) {
       console.log(this, err);
@@ -331,30 +338,22 @@ class WorldMap {
   addBlock(block, type) {
     this.removeBlock(block);
     block.classList.add(type);
-    // console.log("Adding block", block, type);
   }
 
   removeBlock(block) {
-    // console.log("remove block");
-    // console.log(block.classList);
     for (const type in BlockTypes) {
-      // console.log(type, BlockTypes[type]);
       block.classList.remove(BlockTypes[type]);
     }
-    // block.classList.add(BlockTypes.SKY);
   }
   createDirt() {
     let start = Math.floor(0.6 * this.rows);
     let end = Math.floor(1 * this.rows);
-    // let start = 0, end = 3;
-    // let dirtBlock = document.querySelector('.dirt');
     for (let row = start; row < end; row++)
       for (let col = 0; col < this.columns; col++) {
         let i = row * this.columns + col;
 
         this.blocks[i].classList.remove("sky");
         this.blocks[i].classList.add("dirt");
-        //   console.log(i,this.blocks[i], this.rows, this.columns);
       }
     // console.log(this.blocks,this.blocks.length, typeof(this.blocks[0]));
   }
@@ -368,10 +367,10 @@ class WorldMap {
       this.addBlock(this.blocks[curr], BlockTypes.SUN);
     });
   }
-  createCloud() {
+  createCloud(offset) {
     //pick a random spot in the sky
-    let seedX = randomInt(0.2 * this.rows, 2); // selects a row in the sky area
-    let seedY = randomInt(this.columns);
+    let seedX = randomInt(0.3 * this.rows, 2); // selects a row in the sky area
+    let seedY = randomInt(this.columns/this.nClouds, offset);
     let cloud = new Cloud(this.rows, this.columns);
     const cloudType = randomInt(cloud.formations.length);
     for (let i = 0; i < cloud.formations[cloudType].length; i++) {
@@ -392,9 +391,10 @@ class WorldMap {
         this.addBlock(this.blocks[curr], BlockTypes.ROCK);
       }
     // now lets add some random rocks
+    let offset = Math.floor(this.columns/this.nRocks);
     for (let i = 0; i < this.nRocks; i++) {
       let seedX = randomInt(this.rows * 0.4, this.rows * 0.6);
-      let seedY = randomInt(this.columns);
+      let seedY = randomInt(this.columns, offset);
       let rock = new Rock(this.rows, this.columns);
       let rockType = randomInt(rock.forms.length);
       for (let i = 0; i < rock.forms[rockType].length; i++) {
@@ -406,11 +406,11 @@ class WorldMap {
     }
   }
 
-  createTree() {
+  createTree(offset) {
     console.log("creating trees");
     // build a tree stump from bottom up
     let seedX = this.rows * 0.6; // face of earth
-    let seedY = randomInt(this.columns);
+    let seedY = randomInt(this.columns, offset);
     let tree = new Tree(this.rows, this.columns);
     let topOfStump;
     let treeStump = randomInt(tree.stumps.length);
