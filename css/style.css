@@ -42,6 +42,9 @@ body {
   text-shadow: 5px 5px darkgray;
   text-shadow: -5px -5px #85cdd4;
 }
+.inventory h2 {
+  font-size: 28px;
+}
 .btn {
   width: var(--playButtonWidth);
   height: 70px;

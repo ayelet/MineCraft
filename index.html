@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+    content="2D Minecraft lookalike game, pick a shovel and start digging | Developer: Ayelet Danieli">
+
     <link rel="stylesheet" href="./css/normalize.css">
     <link rel="stylesheet" href="./css/style.css">
     <title>Minecraft 2D</title>
@@ -14,41 +17,41 @@
 <body>
     <div class="landing">
         <h1>MineCraft 2D</h1>
-        <input type="button" class="btn playBtn" value="Play">
-        <input type="button" class="btn Help" value="Help">
+        <input type="button" class="btn playBtn" value="Play" aria-label="play">
+        <input type="button" class="btn Help" value="Help" aria-label="help">
     </div>
     <div class="gameScreen">
 
         <div class="inventory">
-            <h3>Tools</h3>
+            <h2>Tools</h2>
             <div class="radio-btn-row">
                 <div class="radio-btn-wrapper">
-                    <button id="shovel" class="radio-btn tool btn-shovel" type="button"></button>
+                    <button id="shovel" class="radio-btn tool btn-shovel" type="button" aria-label="shovel tool"></button>
                 </div>
                 <div class="radio-btn-wrapper">
-                    <button id="axe" class="radio-btn tool btn-axe" type="button"></button>
+                    <button id="axe" class="radio-btn tool btn-axe" type="button" aria-label="axe tool"></button>
                 </div>
                 <div class="radio-btn-wrapper">
-                    <button id="pickaxe" class="radio-btn tool btn-pickaxe" type="button"></button>
+                    <button id="pickaxe" class="radio-btn tool btn-pickaxe" type="button" aria-label="pickaxe tool"></button>
                 </div>
             </div>
-            <h3>Resource</h3>
+            <h2>Resource</h2>
             <div class="radio-btn-row">
                 <div class="radio-btn-wrapper">
-                    <button id="dirt" class="radio-btn resource dirt btn-dirt" type="button">0</button>
+                    <button id="dirt" class="radio-btn resource dirt btn-dirt" type="button" aria-label="resource dirt">0</button>
                 </div>
                 <div class="radio-btn-wrapper">
-                    <button id="rock" class="radio-btn resource rock btn-rock" type="button">0</button>
+                    <button id="rock" class="radio-btn resource rock btn-rock" type="button" aria-label="resource rock">0</button>
                 </div>
                 <div class="radio-btn-wrapper">
-                    <button id="wood" class="radio-btn resource wood btn-wood" type="button">0</button>
+                    <button id="wood" class="radio-btn resource wood btn-wood" type="button" aria-label="resource wood">0</button>
                 </div>
                 <div class="radio-btn-wrapper">
-                    <button id="leaf" class="radio-btn resource leaf btn-leaf" type="button">0</button>
+                    <button id="leaf" class="radio-btn resource leaf btn-leaf" type="button" aria-label="resource leaf">0</button>
                 </div>
             </div>
             <div class="restart-wrapper">
-                <input type="button" class='restart btn' value="Restart">
+                <input type="button" class='restart btn' value="Restart" aria-label="restart">
             </div>
         </div>
         <div class="gameWorld"></div>
